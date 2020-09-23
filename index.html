@@ -1,78 +1,83 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+
+  <title>Gerador de QR Code Gratuito - Hendal Web </title>
 </head>
 
 <body>
 
-  <button id="abre">Abre modal</button>
-  <!-- Modal google -->
-  <div class="modal-google" id="modal-google">
-    <div class="modal-container">
-      <button class="fecha-modal">x</button>
-      <div class="modal-body">
-        <div class="modal-content">
-          <div class="header">
-            <h3>Novo Evento</h3>
-            <button class="report-bug">Novo Calendário</button>
-          </div>
-          <div class="body">
-            <form action="">
-              <!-- select -->
-              <label for="select-calendario">Calendário</label>
-              <select id="select-calendario" class="menos">
-                <option value="0">Opção 01</option>
-              </select>
-              <!-- checkbox -->
-              <div class="check-notifica">
-                <input type="checkbox" id="notificar_lead">
-                <label for="notificar_lead" id="teste">Notificar Lead</label>
-              </div>
-              
+  <div class="container">
 
-              <!-- titulo -->
-              <label for="titulo-evento">Título do Evento</label>
-              <input type="text" class="menos">
-
-              <div class="datas-evento">
-                <!-- Data inicio  -->
-                <div class="data-ini">
-                  <label for="data-inicio">Data ínicio</label>
-                  <input type="datetime-local">  
-                </div>
-                
-                <!-- Data final  -->
-                <div class="data-fim">
-                  <label for="data-final">Data Final</label>
-                  <input type="datetime-local">
-                </div>
-              
-
-              </div>
-
-
-            </form>
-          </div>
-          <div class="footer">
-            <button>Salvar Evento</button>
-          </div>
-
+    <div class="grid-container">
+      <div class="item">
+        <h1>Gere o seu QR Code Agora 😄</h1>
+        <label for="urlQR">Digite a URL</label>
+        <input id="urlQR" type="text" placeholder="https://www.google.com.br" />
+        <div class="box-btn">
+          <button id="btn">Gerar QR Code</button>
         </div>
+      </div>
 
+      <div class="item">
+        <div id="qrcode"></div>
+        <span id="saidaUrl"></span>
       </div>
     </div>
-  </div>
+
+
+    <footer>
+      <p>Feito por: <a href="https://github.com/moraislucas" target="_blank">Lucas Morais</a></p>
+    </footer>
+
   </div>
 
 
-  <script type="module" src="./app.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <script>
+    function init() {
+      const btn = document.querySelector('#btn')
+      const saidaUrl = document.querySelector('#saidaUrl')
+      btn.addEventListener('click', (e) => {
+        e.preventDefault()
+        makeCode()
+      })
+      var qrcode = new QRCode("qrcode");
+
+      function makeCode() {
+        var input = document.getElementById("urlQR");
+        if (input.value) {
+          qrcode.makeCode(input.value);
+          saidaUrl.innerText = input.value;
+        } else {
+          alert('URL é obrigatória')
+          input.focus()
+        }
+      }
+
+      $("#text").
+      on("blur", function () {
+        makeCode();
+      }).
+      on("keydown", function (e) {
+        if (e.keyCode == 13) {
+          makeCode();
+        }
+      });
+    }
+
+    init();
+  </script>
 </body>
 
 </html>
